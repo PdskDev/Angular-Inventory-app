@@ -19,4 +19,21 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  delete = false;
+  productToBeDeleted;
+
+  onDelete(product) {
+    this.delete = true;
+    this.productToBeDeleted = product;
+  }
+
+  handleCancel() {
+    this.delete = false;
+  }
+
+  confirmDelete() {
+    this.handleCancel();
+    this.productService.removeProduct(this.productToBeDeleted);
+  }
 }
