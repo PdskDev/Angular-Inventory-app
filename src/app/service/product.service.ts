@@ -45,7 +45,7 @@ export class ProductService {
     },
     {
       id: generateId(),
-      name: "PlayStation 4",
+      name: "PlayStation 4 500Gb",
       active: true,
       description: "Like Brand New",
       expirationDate: "30/06/2023",
@@ -61,63 +61,63 @@ export class ProductService {
     },
     {
       id: generateId(),
-      name: "Samsung Galaxy J",
+      name: "Samsung Galaxy J 2",
       active: false,
       description: "Like Brand New",
-      expirationDate: "01/5/2022",
+      expirationDate: "03/5/2022",
       type: "mobile",
     },
     {
       id: generateId(),
-      name: "Sony Bravia 65",
+      name: "Sony Bravia Xtra",
       active: true,
       description: "Best image",
-      expirationDate: "09/8/2023",
+      expirationDate: "10/8/2023",
       type: "television",
     },
     {
       id: generateId(),
-      name: "Nintendo Switch",
+      name: "Nintendo Switch 64",
       active: true,
       description: "Like Brand New",
-      expirationDate: "15/10/2023",
+      expirationDate: "16/10/2023",
       type: "game-console",
     },
     {
       id: generateId(),
-      name: "PlayStation 4",
+      name: "PlayStation 5 1Tb",
       active: true,
       description: "Like Brand New",
-      expirationDate: "30/06/2023",
+      expirationDate: "10/06/2023",
       type: "game-console",
     },
     {
       id: generateId(),
-      name: "IPhone X",
+      name: "IPhone 6",
       active: false,
       description: "Like Brand New",
-      expirationDate: "01/12/2022",
+      expirationDate: "09/12/2022",
       type: "mobile",
     },
     {
       id: generateId(),
-      name: "Samsung Galaxy J",
+      name: "Samsung Galaxy X",
       active: false,
       description: "Like Brand New",
-      expirationDate: "01/5/2022",
+      expirationDate: "05/5/2022",
       type: "mobile",
     },
     {
       id: generateId(),
-      name: "Sony Bravia 65",
+      name: "Sony Bravia 55",
       active: true,
       description: "Best image",
-      expirationDate: "09/8/2023",
+      expirationDate: "10/8/2023",
       type: "television",
     },
     {
       id: generateId(),
-      name: "Nintendo Switch",
+      name: "Nintendo Switch I",
       active: true,
       description: "Like Brand New",
       expirationDate: "15/10/2023",
@@ -135,12 +135,13 @@ export class ProductService {
 
   products$ = new BehaviorSubject<IProduct[]>(this.products);
 
-  removeProduct(product: any) {
+  removeProduct(product: IProduct) {
     const index = this.products.indexOf(product);
     this.products = [
       ...this.products.slice(0, index),
-      ...this.products.slice(index, +1),
+      ...this.products.slice(index + 1),
     ];
+
     this.products$.next(this.products);
   }
 }
