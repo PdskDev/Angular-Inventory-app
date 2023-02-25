@@ -17,6 +17,13 @@ import {
 import { ClrWizard } from "@clr/angular";
 import * as _ from "lodash";
 
+function minDateValidation(date: Date): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const forbidden = new Date(control.value) < date;
+    return forbidden ? { minDateValidation: { value: control.value } } : null;
+  };
+}
+
 @Component({
   selector: "in-product",
   templateUrl: "./product.component.html",
@@ -146,11 +153,4 @@ export class ProductComponent implements OnInit {
   ngOnChanges() {
     this.ngOnInit();
   }
-}
-
-function minDateValidation(date: Date): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const forbidden = new Date(control.value) < date;
-    return forbidden ? { minDateValidation: { value: control.value } } : null;
-  };
 }
