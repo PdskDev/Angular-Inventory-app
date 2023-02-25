@@ -48,6 +48,7 @@
             placeholder="IPhone X..."
             formControlName="name"
           />
+          <clr-control-error>This field is required!</clr-control-error>
         </clr-input-container>
 
         <div class="clr-toggle-wrapper toggle-switch">
@@ -96,6 +97,7 @@
           formGroupName="expirationDate"
           aria-label="expiration date"
         />
+        <clr-control-error>{{ expirationError }}</clr-control-error>
       </clr-input-container>
     </clr-wizard-page>
   </clr-wizard>
