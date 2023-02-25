@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 import {
   AbstractControl,
   FormArray,
@@ -7,6 +14,7 @@ import {
   ValidatorFn,
   Validators,
 } from "@angular/forms";
+import { ClrWizard } from "@clr/angular";
 
 function minDateValidation(date: Date): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -23,6 +31,8 @@ function minDateValidation(date: Date): ValidatorFn {
 export class ProductComponent implements OnInit {
   productForm: FormGroup;
   @Input() product: any;
+  @Output() finish = new EventEmitter();
+  @ViewChild("productWizard", { static: false }) productWizard: ClrWizard;
 
   constructor(private fb: FormBuilder) {
     this.productForm = this.fb.group({
@@ -91,6 +101,37 @@ export class ProductComponent implements OnInit {
     ) {
       return "Expiration should be after today's date";
     }
+  }
+
+  get isBasicInvalid(): boolean {
+    return this.productForm.get("basic").invalid;
+  }
+
+  get isExpirationInvalid(): boolean {
+    return this.productForm.get("expiration").invalid;
+  }
+
+  handleClose() {
+    this.finish.emit();
+    this.close();
+  }
+
+  close() {
+    this.productForm.reset();
+    this.deviceType = "tablet";
+    this.productWizard.goTo(this.productWizard.pageCollection.pages.first.id);
+    this.productWizard.reset();
+  }
+
+  handleFinish() {
+    this.finish.emit({
+      product: {
+        type: this.deviceType,
+        ...this.productForm.get("basic").value,
+        ...this.productForm.get("expiration").value,
+      },
+    });
+    this.close();
   }
 
   ngOnInit() {}
