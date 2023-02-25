@@ -15,13 +15,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { ClrWizard } from "@clr/angular";
-
-function minDateValidation(date: Date): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const forbidden = new Date(control.value) < date;
-    return forbidden ? { minDateValidation: { value: control.value } } : null;
-  };
-}
+import * as _ from "lodash";
 
 @Component({
   selector: "in-product",
@@ -134,5 +128,29 @@ export class ProductComponent implements OnInit {
     this.close();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.product) {
+      this.productForm.setValue({
+        basic: {
+          ..._.pick(this.product, ["name", "description", "active"]),
+          features: this.product.features || [""],
+        },
+        expiration: {
+          ..._.pick(this.product, ["expirationDate"]),
+        },
+      });
+      this.deviceType = this.product.type;
+    }
+  }
+
+  ngOnChanges() {
+    this.ngOnInit();
+  }
+}
+
+function minDateValidation(date: Date): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const forbidden = new Date(control.value) < date;
+    return forbidden ? { minDateValidation: { value: control.value } } : null;
+  };
 }
